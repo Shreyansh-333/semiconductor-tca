@@ -5,6 +5,7 @@ import { computeMetrics, analyzeAllAlgos } from './lib/metrics';
 import LiveTicker from './components/LiveTicker';
 import PriceChart from './components/PriceChart';
 import AlgoBarChart from './components/AlgoBarChart';
+import EmptyState from './components/EmptyState';
 import './App.css';
 
 // Semiconductor basket. Edit this list to change the universe.
@@ -121,13 +122,28 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="topbar">
-        <div className="brand">
-          <h1>Semiconductor-Sector Execution Analytics</h1>
-          <p className="subtitle">TCA across a semiconductor basket · real intraday data · simulated execution</p>
+      <header className="app-header">
+        <span className="logo">Semiconductor Execution Analytics</span>
+        <nav className="header-links">
+          <a href="https://github.com/Shreyansh-333" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href="#about">About</a>
+        </nav>
+      </header>
+
+      <section className="intro">
+        <div className="intro-text">
+          <h1>Execution cost analytics for semiconductor stocks</h1>
+          <p>
+            This tool runs transaction cost analysis on real intraday market data for
+            semiconductor names. It simulates how different execution algorithms would have
+            performed against today's actual price and volume, then scores each one on cost and
+            slippage so you can compare which approach traded better.
+          </p>
         </div>
         <LiveTicker symbol={symbol} />
-      </header>
+      </section>
 
       <div className="source-row">
         <span className="source">Market data: Twelve Data (real intraday &amp; quotes)</span>
@@ -195,6 +211,8 @@ export default function App() {
         </p>
       )}
 
+      {!live && !loading && <EmptyState />}
+
       {live && (
         <div className="kpis">
           <Kpi label="Impl. Shortfall" value={fmtBps(live.implementationShortfallBps)} tone={tone(live.implementationShortfallBps)} />
@@ -206,14 +224,14 @@ export default function App() {
 
       {bars.length > 0 && live && (
         <div className="chart-card">
-          <h3>Price path &amp; fills — {symbol}</h3>
+          <h3>Price path and fills for {symbol}</h3>
           <PriceChart bars={bars} lines={chartLines} fills={fills} landedCount={landedCount} />
         </div>
       )}
 
       {rollup && (
         <div className="chart-card">
-          <h3>Implementation shortfall by algo (bps) — same order</h3>
+          <h3>Implementation shortfall by algo, in bps, on the same order</h3>
           <AlgoBarChart rows={rollup} activeAlgo={currentOrder?.algo} />
         </div>
       )}
@@ -256,10 +274,26 @@ export default function App() {
         </div>
       )}
 
-      <footer className="foot">
-        Prices via Twelve Data. Order execution, fills, spread and market-impact costs are
-        simulated for analytics — no live trading.
-        {meta && bars.length > 0 ? ` Arrival price $${fmtPrice(live.arrivalPrice)}.` : ''}
+      <footer id="about" className="foot">
+        <p className="foot-by">
+          Built by Shreyansh Agrawal
+          <span className="dot">·</span>
+          <a href="https://github.com/Shreyansh-333" target="_blank" rel="noreferrer">GitHub</a>
+          <span className="dot">·</span>
+          {/* TODO: replace with your real LinkedIn URL */}
+          <a href="https://www.linkedin.com/in/your-linkedin-here" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+        </p>
+        <p>
+          I built this to explore execution analytics and to bring my dashboard work into a new
+          domain.
+        </p>
+        <p>Market data provided by Twelve Data.</p>
+        <p className="foot-disclaimer">
+          All executions, fills, spread and impact costs are simulated for analysis only. There is
+          no live trading, and market data may be delayed.
+        </p>
       </footer>
     </div>
   );
