@@ -20,10 +20,21 @@
 }
 
 .app-header .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.2px;
+  font-size: 19px;
+  letter-spacing: -0.3px;
   color: var(--text-h);
+}
+
+.app-header .logo::before {
+  content: '';
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  background: var(--accent);
 }
 
 .header-links {
@@ -56,9 +67,11 @@
 }
 
 .intro-text h1 {
-  font-size: 22px;
-  letter-spacing: -0.4px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
   margin-bottom: 8px;
+  color: var(--text-h);
 }
 
 .intro-text p {

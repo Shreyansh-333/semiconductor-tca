@@ -280,8 +280,11 @@ export default function App() {
           <span className="dot">·</span>
           <a href="https://github.com/Shreyansh-333" target="_blank" rel="noreferrer">GitHub</a>
           <span className="dot">·</span>
-          {/* TODO: replace with your real LinkedIn URL */}
-          <a href="https://www.linkedin.com/in/your-linkedin-here" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.linkedin.com/in/shreyanshagrawal333/"
+            target="_blank"
+            rel="noreferrer"
+          >
             LinkedIn
           </a>
         </p>
